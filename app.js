@@ -47,3 +47,18 @@ const fs = require('fs');
 //     city: "Lviv"
 // }];
 
+// fs.writeFile(path.join(__dirname, 'lesson1_hw', 'main', 'online', 'online.txt'), 'const onlineUsers=[{\nname: "Andrii", \nage: 22, \ncity: "Lviv" }];', (err) => {
+//     if (err) {
+//         console.log(err);
+//         throw err
+//
+//     }
+// });
+// fs.appendFile(path.join(__dirname, 'lesson1_hw', 'main', 'inPerson', 'inPerson.txt'), 'const inPersonUsers=[{\nname: "Andrii", \nage: 22, \ncity: "Lviv" }];', (err) => {
+//     if (err) {
+//         console.log(err);
+//         throw err
+//
+//     }
+// });
+
