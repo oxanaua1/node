@@ -1,4 +1,0 @@
-const inPersonUsers=[{
-name: "Andrii", 
-age: 22, 
-city: "Lviv" }];
