@@ -1,0 +1,10 @@
+online
+name:Dima;
+age:20;
+city:Kyiv;
+name:Kira;
+age:21;
+name:Lina;
+city:Kyiv;
+city:Lviv;
+age:22;

@@ -1,0 +1,10 @@
+inperson
+name:Andrii;
+age:22;
+city:Lviv;
+name:Sasha;
+city:Kyiv;
+age:21;
+name:Anna;
+city:Lviv;
+age:24;
