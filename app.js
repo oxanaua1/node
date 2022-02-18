@@ -22,98 +22,71 @@ const fs = require('fs');
 //
 //     }
 // });
-// fs.appendFile(path.join(__dirname, 'app.js'), 'const onlineUsers=[{\nname: "Andrii", \nage: 22, \ncity: "Lviv" }];', (err) => {
-//     if (err) {
-//         console.log(err);
-//         throw err
-//
-//     }
-// });
-// const onlineUsers = [{
-//     name: "Andrii",
-//     age: 22,
-//     city: "Lviv"
-// }];
-// fs.appendFile(path.join(__dirname, 'app.js'), 'const inPersonUsers=[{\nname: "Andrii", \nage: 22, \ncity: "Lviv" }];', (err) => {
-//     if (err) {
-//         console.log(err);
-//         throw err
-//
-//     }
-// });
-// const inPersonUsers = [{
-//     name: "Andrii",
-//     age: 22,
-//     city: "Lviv"
-// }];
-//
-// fs.writeFile(path.join(__dirname, 'lesson1_hw', 'main', 'online', 'online.txt'), 'const onlineUsers=[{\nname: "Andrii", \nage: 22, \ncity: "Lviv" }];', (err) => {
-//     if (err) {
-//         console.log(err);
-//         throw err
-//
-//     }
-// });
-// fs.writeFile(path.join(__dirname, 'lesson1_hw', 'main', 'inPerson', 'inPerson.txt'), 'const inPersonUsers=[{\nname: "Andrii", \nage: 22, \ncity: "Lviv" }];', (err) => {
-//     if (err) {
-//         console.log(err);
-//         throw err
-//
-//     }
-// });
 
+// const onlineUsers = [
+//     {name: "Dima", age: 20, city: "Kyiv"},
+//     {name: "Kira", age: 21, city: "Kyiv"},
+//     {name: "Lina", age: 22, city: "Lviv"},
+// ];
 //
-// const exchangeFiles = () => {
-//     if (path.join(__dirname, 'lesson1_hw', 'main', 'online', 'online.txt')) {
+// const inPersonUsers = [
+//     {name: "Andrii", age: 22, city: "Lviv"},
+//     {name: "Sasha", age: 21, city: "Kyiv"},
+//     {name: "Anna", age: 24, city: "Lviv"},
+// ];
 //
-//         fs.rename(path.join(__dirname, 'lesson1_hw', 'main', 'online', 'online.txt'), path.join(__dirname, 'lesson1_hw', 'main', 'inPerson', 'inPerson.txt'),
-//             (err) => {
+// for (const onlineUser of onlineUsers) {
+//     for (const key in onlineUser) {
+//         fs.appendFile(path.join(__dirname, 'lesson1_hw', 'main', 'online', 'online.txt'),
+//             `\n${key}:${onlineUser[key]};`, (err) => {
 //                 if (err) {
 //                     console.log(err);
-//
+//                     throw err
 //                 }
-//             });
-//
+//             })
 //     }
-//     if (path.join(__dirname, 'lesson1_hw', 'main', 'inPerson', 'inPerson.txt')) {
-//         fs.rename(path.join(__dirname, 'lesson1_hw', 'main', 'inPerson', 'inPerson.txt'), path.join(__dirname, 'lesson1_hw', 'main', 'online', 'online.txt'),
-//             (err) => {
+// }
+// for (const inPersonUser of inPersonUsers) {
+//     for (const key in inPersonUser) {
+//         fs.appendFile(path.join(__dirname, 'lesson1_hw', 'main', 'inPerson', 'inPerson.txt'),
+//             `\n${key}:${inPersonUser[key]};`, (err) => {
 //                 if (err) {
 //                     console.log(err);
-//
+//                     throw err
 //                 }
-//             });
-//
+//             })
 //     }
-// };
-// exchangeFiles();
+// }
 
+const pathInPerson = path.join(__dirname, 'lesson1_hw', 'main', 'inPerson', 'inPerson.txt');
+const pathOnline = path.join(__dirname, 'lesson1_hw', 'main', 'online', 'online.txt');
 
-// const exchangeFiles = () => {
-//     switch (path.join(__dirname, 'lesson1_hw', 'main', 'online', 'online.txt')) {
-//
-//         case path.join(__dirname, 'lesson1_hw', 'main', 'online', 'online.txt'):
-//
-//             fs.rename(path.join(__dirname, 'lesson1_hw', 'main', 'online', 'online.txt'), path.join(__dirname, 'lesson1_hw', 'main', 'inPerson', 'inPerson.txt'),
-//                 (err) => {
-//                     if (err) {
-//                         console.log(err);
-//
-//                     }
-//                 });
-//             break;
-//
-//     }
-//     switch (path.join(__dirname, 'lesson1_hw', 'main', 'inPerson', 'inPerson.txt')) {
-//         case path.join(__dirname, 'lesson1_hw', 'main', 'inPerson', 'inPerson.txt'):
-//             fs.rename(path.join(__dirname, 'lesson1_hw', 'main', 'inPerson', 'inPerson.txt'), path.join(__dirname, 'lesson1_hw', 'main', 'online', 'online.txt'),
-//                 (err) => {
-//                     if (err) {
-//                         console.log(err);
-//
-//                     }
-//                 });
-//             break;
-//     }
-// };
-// exchangeFiles();
+const exchangeFiles = () => {
+
+    fs.readFile(pathInPerson, 'utf8', (err, inPersonData) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+        fs.writeFile(pathOnline, inPersonData, (err) => {
+            if (err) {
+                console.log(err);
+                throw err;
+            }
+        });
+    });
+    fs.readFile(pathOnline, 'utf8', ((err, onlineData) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+        fs.writeFile(pathInPerson, onlineData, (err) => {
+            if (err) {
+                console.log(err);
+                throw err;
+            }
+        });
+    }));
+
+};
+exchangeFiles();
