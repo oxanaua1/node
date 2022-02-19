@@ -48,8 +48,8 @@ const fs = require('fs');
 //             }
 //         })
 // }
-
-////create new file with old file data + delete old file
+//
+// //create new file with old file data + delete old file
 //
 // fs.readFile(path.join(__dirname, 'lesson1_cw', 'task2.txt'), (err, data) => {
 //     if (err) {
@@ -64,7 +64,7 @@ const fs = require('fs');
 //     })
 //
 //     if (data) {
-//         fs.writeFile(path.join(__dirname, 'lesson1_cw', 'main', 'task2New'), `${data}`, (err) => {
+//         fs.writeFile(path.join(__dirname, 'lesson1_cw', 'main', 'task2New.txt'), `${data}`, (err) => {
 //             if (err) {
 //                 console.log(err);
 //                 throw err;
@@ -83,21 +83,86 @@ const fs = require('fs');
 
 ///create directory
 
-// fs.mkdir(path.join(__dirname, 'lesson1_cw', 'task'), (err) => {
-//     if (err) {
-//         console.log(err);
-//         throw err;
-//     }
-// })
+// fs.mkdir(path.join(__dirname, 'lesson1_cw', 'task'),
+//     {recursive: true},
+//     (err) => {
+//         if (err) {
+//             console.log(err);
+//             throw err;
+//         }
+//     })
 
 ////create new directories and files with data
+//
+// const creator = () => {
+//     for (let i = 1; i <= 5; i++) {
+//
+//         fs.mkdir(path.join(__dirname, 'lesson1_cw', 'task', `user-${i}`),
+//             {recursive: true},
+//             (err) => {
+//                 if (err) {
+//                     console.log(err);
+//                     throw err;
+//                 }
+//                 if (i <= 2) {
+//                     fs.writeFile(path.join(__dirname, 'lesson1_cw', 'task', `userDetails-${i}.txt`),
+//                         '\n UserInfo, details',
+//                         (err) => {
+//                             if (err) {
+//                                 console.log(err);
+//                                 throw err;
+//                             }
+//                         });
+//                 }
+//             });
+//     }
+//
+// }
+// creator();
 
-fs.mkdir(path.join(__dirname, 'lesson1_cw', 'task', 'user', 'userDetails'), (err) => {
-    if (err) {
-        console.log(err);
-        throw err;
-    }
+//// create function for delete files's data & rename directories 'new'
 
-})
+const changeFiles = () => {
+    fs.readdir(path.join(__dirname, 'lesson1_cw', 'task'),
+        {withFileTypes: true},
+        (err, dataDirs) => {
+            if (err) {
+                console.log(err)
+                throw err;
+            }
+            dataDirs.forEach((file) => {
+                console.log(file.name)
 
+
+                if (file.isFile()) {
+
+                    fs.truncate(path.join(__dirname, 'lesson1_cw', 'task', `${file.name}`),
+                        0,
+                        (err) => {
+                            if (err) {
+                                console.log(err)
+                                throw err;
+                            }
+                        });
+                } else {
+                    fs.rename(
+                        path.join(__dirname, 'lesson1_cw', 'task', `${file.name}`),
+                        path.join(__dirname, 'lesson1_cw', 'task', `New_${file.name}`),
+                        (err) => {
+                            if (err) {
+                                console.log(err)
+                                throw err;
+                            }
+                        });
+
+
+                }
+            });
+
+        });
+
+};
+
+
+changeFiles();
 

@@ -8,7 +8,94 @@
 Прочитайте його, скопіюйте всі дані з нього і перенесіть їх в нову папку та файл в ній, старий файл видаліть після того
  як все завершиться. Також вийде callback hell
 
-3. Створіть папку (можете вручну) напишіть скріпт який створить в ній якись дані (можуть бути нові папки і
+3. Створіть папку (можете вручну) напишіть скріпт який створить
+в ній якись дані
+(можуть бути нові папки і
 файли(в файли запишіть якусь дату) )
-і напишіть функцію яка буде зчитувати папку і перевіряти якщо дані які в ній лежать - це файли тоді вам потрібно
- їх очистити, але не видаляти, якщо дані - це папки, вам потрібно їх перейменувати і додати до назви префікс _new
+і напишіть функцію яка буде зчитувати папку і перевіряти якщо дані які
+в ній лежать - це файли тоді вам потрібно
+ їх очистити, але не видаляти, якщо дані - це папки, вам потрібно
+ їх перейменувати і додати до назви префікс _new
+
+
+
+ 3 -task////Через isFiles() , path.extname(file), або через includes метод
+ if recursive dirs:
+const changeFiles = () => {
+    fs.readdir(path.join(__dirname, 'lesson1_cw', 'task'),
+        {withFileTypes: true},
+        (err, dataDirs) => {
+            if (err) {
+                console.log(err)
+                throw err;
+            }
+            dataDirs.forEach((file) => {
+                console.log(file.name)
+
+
+                if (file.isFile()) {
+
+                    fs.truncate(path.join(__dirname, 'lesson1_cw', 'task', `${file.name}`),
+                        0,
+                        (err) => {
+                            if (err) {
+                                console.log(err)
+                                throw err;
+                            }
+                        });
+                } else {
+                    fs.rename(
+                        path.join(__dirname, 'lesson1_cw', 'task', `${file.name}`),
+                        path.join(__dirname, 'lesson1_cw', 'task', `New_${file.name}`),
+                        (err) => {
+                            if (err) {
+                                console.log(err)
+                                throw err;
+                            }
+                        });
+                //
+                //     fs.readdir(path.join(__dirname, 'lesson1_cw', 'task', `New_${file.name}`),
+                //         {withFileTypes: true},
+                //         (err, dataNewDirs) => {
+                //             if (err) {
+                //                 console.log(err)
+                //                 throw err;
+                //             }
+                //             dataNewDirs.forEach(newFile => {
+                //                 console.log(newFile.name);
+                //
+                //                 if (newFile.isFile()) {
+                //                     fs.truncate(path.join(__dirname, 'lesson1_cw', 'task', `New_${file.name}`, `${newFile.name}`),
+                //                         0,
+                //                         () => {
+                //                             if (err) {
+                //                                 console.log(err)
+                //                                 throw err;
+                //                             }
+                //                         })
+                //
+                //                 } else {
+                //                     fs.rename(
+                //                         path.join(__dirname, 'lesson1_cw', 'task', `New_${file.name}`, `${newFile.name}`),
+                //                         path.join(__dirname, 'lesson1_cw', 'task', `New_${file.name}`, `New_${newFile.name}`),
+                //                         (err) => {
+                //                             if (err) {
+                //                                 console.log(err)
+                //                                 throw err;
+                //                             }
+                //                         });
+                //                 }
+                //             });
+                //         })
+
+                }
+            });
+
+        });
+
+};
+
+////Через isFiles() , path.extname(file), або через includes метод
+
+changeFiles();
+
