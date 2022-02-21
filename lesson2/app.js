@@ -4,7 +4,7 @@
 ////frameworks: Express, Nest etc.
 ////nmp init that create package.json. for download libraries.
 ////npm i express
-////node templates: handlebars -  npm express handlebars
+////node templates: handlebars -  npm i express-handlebars
 
 ////передаю першим шлях по якому перейде користувач, наст. контролер, що є колбеком(request, response)
 ////request, response це і є streams і приймають їх методи
@@ -81,6 +81,7 @@ app.get('/login', (req, res) => {
 app.get('/users', (req, res) => {
     res.render('users', {users})
 });
+
 app.get('/users/:userId', (req, res) => {
     // console.log(req.params)
     const {userId} = req.params;
