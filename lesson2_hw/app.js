@@ -18,6 +18,17 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
+app.post('/login', ({body}, res) => {
+    const userExist = users.some(user => user.email === body.email);
+    if (userExist) {
+        error = 'User with this email already exists';
+        res.redirect('/error');
+        return;
+    }
+    users.push({...body, id: users.length ? users[users.length - 1].id + 1 : 1})
+    res.redirect('/users');
+
+});
 
 app.get('/users', ({query}, res) => {
     if (Object.keys(query).length) {
@@ -36,18 +47,6 @@ app.get('/users', ({query}, res) => {
     res.render('users', {users});
 });
 
-app.post('/login', ({body}, res) => {
-    const userExist = users.some(user => user.email === body.email);
-    if (userExist) {
-        error = 'User with this email already exists';
-        res.redirect('/error');
-        return;
-    }
-    users.push({...body, id: users.length ? users[users.length - 1].id + 1 : 1})
-    res.redirect('/users');
-
-});
-
 app.get('/users/:userId', ({params}, res) => {
     const user = users.find(user => user.id === +params.userId);
     if (!user) {
@@ -56,16 +55,16 @@ app.get('/users/:userId', ({params}, res) => {
         return;
     }
 
-    res.render('userInfo', { user });
+    res.render('userInfo', {user});
 });
+
 app.get('/error', (req, res) => {
-    res.render('error', { error });
+    res.render('error', {error});
 });
 
 app.use((req, res) => {
     res.render('notFound');
 });
-
 
 
 app.listen(5200, () => {
